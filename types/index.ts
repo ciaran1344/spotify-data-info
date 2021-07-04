@@ -6,4 +6,5 @@ export interface TrackEntry {
   trackName: string;
 }
 
+/** "StreamingHistoryN.json" file contents. */
 export type StreamingHistory = TrackEntry[];
