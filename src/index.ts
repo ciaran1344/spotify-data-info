@@ -28,13 +28,16 @@ const OPTION_DEFINITIONS: OptionDefinition[] = [
 ];
 
 /**
- * @param path Spotify data folder path.
+ * Read "StreamingHistoryN.json" files from the passed path, returning a single streaming history.
+ *
+ * @param path Spotify data folder path
+ * @return Concatenated array of all streaming history track entries
  */
 async function readStreamingHistory(path: string): Promise<TrackEntry[]> {
   const names = await fsPromises.readdir(path);
-  const streamingHistoryNames = names.filter((name) => {
-    return name.startsWith("StreamingHistory");
-  });
+  const streamingHistoryNames = names
+    .filter((name) => name.startsWith("StreamingHistory"))
+    .sort();
 
   const promises = streamingHistoryNames.map(async (name) => {
     const streamingHistoryPath = join(path, name);
@@ -48,15 +51,30 @@ async function readStreamingHistory(path: string): Promise<TrackEntry[]> {
   return streamingHistories.flat();
 }
 
+/**
+ * Given a streaming history, count track plays by artist.
+ *
+ * @param data Streaming history track entries
+ * @return Array of `[artist, count]` tuples in count-descending order
+ */
 function countByArtist(data: TrackEntry[]): [artist: string, count: number][] {
-  const trackEntriesByArtist = _.groupBy(data, "artistName");
-  const artistCounts = _.mapValues(trackEntriesByArtist, "length");
-
-  return Object.entries(artistCounts).sort(
-    ([, count1], [, count2]) => count2 - count1
-  );
+  return _.chain(data)
+    .groupBy("artistName")
+    .mapValues("length")
+    .entries()
+    .value()
+    .sort(([, count1], [, count2]) => count2 - count1);
 }
 
+/**
+ * Given a streaming history, retain entries that are within the passed cutoff date and play
+ * duration threshold.
+ *
+ * @param data Streaming history track entries
+ * @param cutoffDate End time to filter track entries by
+ * @param playedThreshold Play duration to filter track entries by
+ * @return Array of filtered streaming history track entries
+ */
 function filterStreamingHistory(
   data: TrackEntry[],
   cutoffDate?: Date,
