@@ -48,16 +48,13 @@ async function readStreamingHistory(path: string): Promise<TrackEntry[]> {
   return streamingHistories.flat();
 }
 
-function countByArtist(
-  data: TrackEntry[],
-  limit?: number
-): [artist: string, count: number][] {
+function countByArtist(data: TrackEntry[]): [artist: string, count: number][] {
   const trackEntriesByArtist = _.groupBy(data, "artistName");
   const artistCounts = _.mapValues(trackEntriesByArtist, "length");
 
-  return Object.entries(artistCounts)
-    .sort(([, count1], [, count2]) => count2 - count1)
-    .slice(0, limit);
+  return Object.entries(artistCounts).sort(
+    ([, count1], [, count2]) => count2 - count1
+  );
 }
 
 function filterStreamingHistory(
@@ -98,7 +95,10 @@ if (filteredCount) {
 
 console.log();
 
-const artistCounts = countByArtist(filteredStreamingHistory, options.limit);
+const artistCounts = countByArtist(filteredStreamingHistory).slice(
+  0,
+  options.limit
+);
 console.log(`Top ${pluralize("artist count", artistCounts.length, true)}:`);
 
 artistCounts.forEach(([artist, count], i) => {

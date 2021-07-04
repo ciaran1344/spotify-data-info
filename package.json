@@ -1,15 +1,14 @@
 {
-  "name": "spotifydata",
+  "name": "spotify-data-info",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
+  "description": "A tool for summarising Spotify data downloads.",
   "type": "module",
   "scripts": {
     "build": "tsc --project ./tsconfig.json",
     "count": "npm run build && node src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ciarán Ingle",
   "license": "ISC",
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
