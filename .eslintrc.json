@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/eslintrc",
+  "root": true,
+  "extends": ["plugin:@ciaran1344/typescript"],
+  "env": {
+    "node": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": true
+    }
+  }
+}

@@ -1,25 +1,38 @@
 {
   "name": "spotify-data-info",
-  "version": "1.0.0",
-  "description": "A tool for summarising Spotify data downloads.",
-  "type": "module",
-  "scripts": {
-    "build": "tsc --project ./tsconfig.json",
-    "count": "npm run build && node src/index.js"
-  },
-  "keywords": [],
+  "version": "2.0.0",
+  "description": "A Node.js script for parsing Spotify \"endsong.json\" files",
   "author": "Ciarán Ingle",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/command-line-args": "^5.0.0",
-    "@types/lodash": "^4.14.170",
-    "@types/node": "^16.0.0",
-    "@types/pluralize": "^0.0.29"
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "format": "prettier --write .",
+    "lint": "eslint --fix src",
+    "type-check": "tsc --noEmit"
   },
+  "license": "ISC",
   "dependencies": {
-    "command-line-args": "^5.1.1",
+    "chalk": "^5.2.0",
+    "commander": "^10.0.1",
     "lodash": "^4.17.21",
-    "pluralize": "^8.0.0",
-    "typescript": "^4.3.5"
+    "rxjs": "^7.8.1",
+    "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@ciaran1344/eslint-plugin": "github:ciaran1344/eslint-plugin",
+    "@ciaran1344/tsconfig-presets": "github:ciaran1344/tsconfig-presets",
+    "@types/lodash": "^4.14.194",
+    "@types/node": "^18.16.3",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "eslint": "^8.47.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-plugin-import": "^2.28.1",
+    "prettier": "^2.8.8",
+    "tslib": "^2.6.1",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
   }
 }
